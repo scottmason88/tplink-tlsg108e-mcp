@@ -1,0 +1,15 @@
+[Unit]
+Description=Read-only TP-Link TL-SG108E MCP service
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+ExecStart=%h/tplink-env/bin/python %h/.local/share/tplink-mcp/server.py
+Restart=on-failure
+RestartSec=5
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=default.target

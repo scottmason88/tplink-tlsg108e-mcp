@@ -1,0 +1,15 @@
+[Unit]
+Description=OpenAI Secure MCP Tunnel - TP-Link Switch
+After=network-online.target tplink-mcp.service
+Wants=network-online.target
+Requires=tplink-mcp.service
+
+[Service]
+Type=simple
+EnvironmentFile=%h/.config/unifi-mcp/tunnel-environment
+ExecStart=/usr/local/bin/tunnel-client run --control-plane.tunnel-id=tunnel_<your-switch-tunnel-id> --mcp.server-url=http://127.0.0.1:8765/mcp --health.listen-addr=127.0.0.1:0
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=default.target
